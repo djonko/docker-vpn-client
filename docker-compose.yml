@@ -2,7 +2,6 @@ services:
   openvpn-client:
     build:
       context: ./build
-    #privileged: true
     container_name: openvpn-client
     restart: unless-stopped
     cap_add:
@@ -14,24 +13,24 @@ services:
       SUBNETS: ${MY_SUBNETS}
       #VPN_AUTH_SECRET: vpn_credentials
       HTTP_PROXY: on
-      #SOCKS_PROXY: on
+      SOCKS_PROXY: on
       HTTP_PROXY_USERNAME_SECRET: proxy_username
       HTTP_PROXY_PASSWORD_SECRET: proxy_password
       SOCKS_LISTEN_ON: ${MY_SOCKS_LISTEN_ON}
-      #SOCKS_PROXY_USERNAME_SECRET: proxy_sock_username
-      #SOCKS_PROXY_PASSWORD_SECRET: proxy_sock_password
+      SOCKS_PROXY_USERNAME_SECRET: proxy_sock_username
+      SOCKS_PROXY_PASSWORD_SECRET: proxy_sock_password
       VPN_LOG_LEVEL: 1
     volumes:
       - /opt/data-docker/volumes/openvpn-client:/data/vpn
     ports:
       - 8778:8080
-      #- 8779:1080
+      - 8779:1080
     secrets:
       - proxy_username
       - proxy_password
-      #- proxy_sock_username
-      #- proxy_sock_password
-      #- vpn_credentials
+      - proxy_sock_username
+      - proxy_sock_password
+      - vpn_credentials
 
 secrets:
   proxy_username:
@@ -42,5 +41,5 @@ secrets:
     file: /opt/data-etc/openvpn-client/proxy_username.txt
   proxy_sock_password:
     file: /opt/data-etc/openvpn-client/proxy_password.txt
-  #vpn_credentials:
-    #file: /opt/data-etc/openvpn-client/vpn_credentials.txt
+  vpn_credentials:
+    file: /opt/data-etc/openvpn-client/vpn_credentials.txt
