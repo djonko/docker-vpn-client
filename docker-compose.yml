@@ -1,22 +1,40 @@
-version: "3.9"
-secrets:
-  auth_secret:
-    file: /opt/data-etc/dockerVpnClient/auth.secret.txt
-
 services:
   openvpn-client:
-    image: ghcr.io/wfg/openvpn-client:latest
+    build:
+      context: ./build
+
+    privileged: true
     container_name: openvpn-client
     cap_add:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:
-      - ALLOWED_SUBNETS=${ALLOWED_SUBNETS}
-      - AUTH_SECRET_FILE=/run/secrets/auth_secret
-      - TZ= "America/Montreal"
-    volumes:
-      - /opt/data-docker/openvpn-client:/config
+      SUBNETS: ${MY_SUBNETS}
+      SOCKS_LISTEN_ON: ${MY_SOCKS_LISTEN_ON}
+      TZ: ${TIME_ZONE}
+      HTTP_PROXY: on
+      SOCKS_PROXY: on
+      HTTP_PROXY_USERNAME_SECRET: proxy_username
+      HTTP_PROXY_PASSWORD_SECRET: proxy_password
+      SOCKS_PROXY_USERNAME: proxy_sock_username
+      SOCKS_PROXY_PASSWORD: proxy_sock_password
     restart: unless-stopped
+    ports:
+      - 8778:8080
+      - 8779:1080
     secrets:
-      - auth_secret
+      - proxy_username
+      - proxy_password
+      - proxy_sock_username
+      - proxy_sock_password
+
+secrets:
+  proxy_username:
+    file: ./opt/data-etc/openvpn-client/proxy_username.txt
+  proxy_password:
+    file: ./opt/data-etc/openvpn-client/proxy_password.txt
+  proxy_sock_username:
+    file: ./opt/data-etc/openvpn-client/proxy_username.txt
+  proxy_sock_password:
+    file: ./opt/data-etc/openvpn-client/proxy_password.txt
