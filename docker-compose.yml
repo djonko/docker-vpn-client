@@ -12,7 +12,7 @@ services:
     environment:
       TZ: ${TIME_ZONE}
       SUBNETS: ${MY_SUBNETS}
-      VPN_AUTH_SECRET: vpn_credentials
+      #VPN_AUTH_SECRET: vpn_credentials
       HTTP_PROXY: on
       SOCKS_PROXY: on
       HTTP_PROXY_USERNAME_SECRET: proxy_username
@@ -30,7 +30,7 @@ services:
       - proxy_password
       - proxy_sock_username
       - proxy_sock_password
-      - vpn_credentials
+      #- vpn_credentials
 
 secrets:
   proxy_username:
@@ -41,5 +41,5 @@ secrets:
     file: /opt/data-etc/openvpn-client/proxy_username.txt
   proxy_sock_password:
     file: /opt/data-etc/openvpn-client/proxy_password.txt
-  vpn_credentials:
-    file: /opt/data-etc/openvpn-client/vpn_credentials.txt
+  #vpn_credentials:
+    #file: /opt/data-etc/openvpn-client/vpn_credentials.txt
