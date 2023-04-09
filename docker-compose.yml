@@ -1,0 +1,22 @@
+version: "3.9"
+secrets:
+  auth_secret:
+    file: /opt/data-etc/dockerVpnClient/auth.secret.txt
+
+services:
+  openvpn-client:
+    image: ghcr.io/wfg/openvpn-client:latest
+    container_name: openvpn-client
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - ALLOWED_SUBNETS=${ALLOWED_SUBNETS}
+      - AUTH_SECRET_FILE=/run/secrets/auth_secret
+      - TZ= "America/Montreal"
+    volumes:
+      - /opt/data-docker/openvpn-client:/config
+    restart: unless-stopped
+    secrets:
+      - auth_secret
