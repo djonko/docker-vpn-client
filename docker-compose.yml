@@ -20,17 +20,18 @@ services:
       - /opt/data-docker/volumes/openvpn-client:/data/vpn
     ports:
       - 8778:8080
-      - 8779:1080
     secrets:
       - proxy_username
       - proxy_password
   socks5:
     restart: unless-stopped
     image: serjs/go-socks5-proxy
+    depends_on:
+      - openvpn-client
     environment:
       TZ: ${TZ}
     ports:
-      - "8779:1080"
+      - 8779:1080
     network_mode: "service:openvpn-client"
 
 secrets:
