@@ -9,7 +9,7 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:
-      TZ: ${TIME_ZONE}
+      TZ: ${TZ}
       SUBNETS: ${MY_SUBNETS}
       #VPN_AUTH_SECRET: vpn_credentials
       HTTP_PROXY: on
