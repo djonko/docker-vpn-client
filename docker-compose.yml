@@ -20,6 +20,7 @@ services:
       SOCKS_LISTEN_ON: ${MY_SOCKS_LISTEN_ON}
       SOCKS_PROXY_USERNAME: proxy_sock_username
       SOCKS_PROXY_PASSWORD: proxy_sock_password
+      VPN_LOG_LEVEL: 1
     volumes:
       - /opt/data-docker/volumes/openvpn-client:/data/vpn
     ports:
