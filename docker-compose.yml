@@ -2,7 +2,7 @@ services:
   openvpn-client:
     build:
       context: ./build
-    privileged: true
+    #privileged: true
     container_name: openvpn-client
     restart: unless-stopped
     cap_add:
