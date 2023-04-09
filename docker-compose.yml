@@ -30,7 +30,7 @@ services:
       - proxy_password
       - proxy_sock_username
       - proxy_sock_password
-      - vpn_credentials
+      #- vpn_credentials
 
 secrets:
   proxy_username:
@@ -41,5 +41,5 @@ secrets:
     file: /opt/data-etc/openvpn-client/proxy_username.txt
   proxy_sock_password:
     file: /opt/data-etc/openvpn-client/proxy_password.txt
-  vpn_credentials:
-    file: /opt/data-etc/openvpn-client/vpn_credentials.txt
+  #vpn_credentials:
+    #file: /opt/data-etc/openvpn-client/vpn_credentials.txt
