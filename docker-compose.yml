@@ -9,16 +9,12 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:
-      TZ: ${TIME_ZONE}
+      TZ: ${TZ}
       SUBNETS: ${MY_SUBNETS}
-      #VPN_AUTH_SECRET: vpn_credentials
       HTTP_PROXY: on
-      SOCKS_PROXY: on
       HTTP_PROXY_USERNAME_SECRET: proxy_username
       HTTP_PROXY_PASSWORD_SECRET: proxy_password
       SOCKS_LISTEN_ON: ${MY_SOCKS_LISTEN_ON}
-      SOCKS_PROXY_USERNAME_SECRET: proxy_sock_username
-      SOCKS_PROXY_PASSWORD_SECRET: proxy_sock_password
       VPN_LOG_LEVEL: 1
     volumes:
       - /opt/data-docker/volumes/openvpn-client:/data/vpn
@@ -28,9 +24,14 @@ services:
     secrets:
       - proxy_username
       - proxy_password
-      - proxy_sock_username
-      - proxy_sock_password
-      #- vpn_credentials
+  socks5:
+    restart: unless-stopped
+    image: serjs/go-socks5-proxy
+    environment:
+      TZ: ${TZ}
+    ports:
+      - "8779:1080"
+    network_mode: "service:openvpn-client"
 
 secrets:
   proxy_username:
@@ -41,5 +42,3 @@ secrets:
     file: /opt/data-etc/openvpn-client/proxy_username.txt
   proxy_sock_password:
     file: /opt/data-etc/openvpn-client/proxy_password.txt
-  #vpn_credentials:
-    #file: /opt/data-etc/openvpn-client/vpn_credentials.txt
