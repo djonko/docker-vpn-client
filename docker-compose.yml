@@ -2,7 +2,6 @@ services:
   openvpn-client:
     build:
       context: ./build
-
     privileged: true
     container_name: openvpn-client
     cap_add:
@@ -10,13 +9,14 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:
-      SUBNETS: ${MY_SUBNETS}
-      SOCKS_LISTEN_ON: ${MY_SOCKS_LISTEN_ON}
       TZ: ${TIME_ZONE}
+      SUBNETS: ${MY_SUBNETS}
+      VPN_AUTH_SECRET: vpn_credentials
       HTTP_PROXY: on
       SOCKS_PROXY: on
       HTTP_PROXY_USERNAME_SECRET: proxy_username
       HTTP_PROXY_PASSWORD_SECRET: proxy_password
+      SOCKS_LISTEN_ON: ${MY_SOCKS_LISTEN_ON}
       SOCKS_PROXY_USERNAME: proxy_sock_username
       SOCKS_PROXY_PASSWORD: proxy_sock_password
     restart: unless-stopped
@@ -28,6 +28,7 @@ services:
       - proxy_password
       - proxy_sock_username
       - proxy_sock_password
+      - vpn_credentials
 
 secrets:
   proxy_username:
@@ -38,3 +39,5 @@ secrets:
     file: ./opt/data-etc/openvpn-client/proxy_username.txt
   proxy_sock_password:
     file: ./opt/data-etc/openvpn-client/proxy_password.txt
+  vpn_credentials:
+    file: ./opt/data-etc/openvpn-client/vpn_credentials.txt
