@@ -16,7 +16,7 @@ services:
       SUBNETS: ${MY_SUBNETS}
       #VPN_AUTH_SECRET: vpn_credentials
       HTTP_PROXY: on
-      SOCKS_PROXY: on
+      SOCKS_PROXY: off
       HTTP_PROXY_USERNAME_SECRET: proxy_username
       HTTP_PROXY_PASSWORD_SECRET: proxy_password
       SOCKS_LISTEN_ON: ${MY_SOCKS_LISTEN_ON}
