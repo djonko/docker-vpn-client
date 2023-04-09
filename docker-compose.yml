@@ -6,10 +6,13 @@ services:
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:
-      TZ: ${TZ}
+      TZ: ${TIMEZONE}
       SUBNETS: ${MY_SUBNETS}
       #VPN_AUTH_SECRET: vpn_credentials
       HTTP_PROXY: on
@@ -19,7 +22,7 @@ services:
       SOCKS_LISTEN_ON: ${MY_SOCKS_LISTEN_ON}
       SOCKS_PROXY_USERNAME_SECRET: proxy_sock_username
       SOCKS_PROXY_PASSWORD_SECRET: proxy_sock_password
-      VPN_LOG_LEVEL: 4
+      VPN_LOG_LEVEL: 3
     volumes:
       - /opt/data-docker/volumes/openvpn-client:/data/vpn
     ports:
