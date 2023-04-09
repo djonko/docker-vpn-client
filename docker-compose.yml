@@ -18,8 +18,8 @@ services:
       HTTP_PROXY_USERNAME_SECRET: proxy_username
       HTTP_PROXY_PASSWORD_SECRET: proxy_password
       SOCKS_LISTEN_ON: ${MY_SOCKS_LISTEN_ON}
-      SOCKS_PROXY_USERNAME: proxy_sock_username
-      SOCKS_PROXY_PASSWORD: proxy_sock_password
+      SOCKS_PROXY_USERNAME_SECRET: proxy_sock_username
+      SOCKS_PROXY_PASSWORD_SECRET: proxy_sock_password
       VPN_LOG_LEVEL: 1
     volumes:
       - /opt/data-docker/volumes/openvpn-client:/data/vpn
@@ -31,7 +31,7 @@ services:
       - proxy_password
       - proxy_sock_username
       - proxy_sock_password
-      #- vpn_credentials
+      - vpn_credentials
 
 secrets:
   proxy_username:
